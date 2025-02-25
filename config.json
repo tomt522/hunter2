@@ -17,7 +17,7 @@
     "ignoreCommand": []
   },
   "adminBot": [
-    "",
+    "61559946582981",
     ""
   ],
   "whiteListMode": {
@@ -25,8 +25,8 @@
     "whiteListIds": [],
     "notes": "if you enable this feature, only the ids in the whiteListIds section can use the bot"
   },
-  "nickNameBot": "Your_Bot_Name",
-  "prefix": "/",
+  "nickNameBot": "𝒀𝒐𝒖𝒓_𝑻𝒘𝒊𝒏𝒌𝒍𝒆 🐇",
+  "prefix": "!",
   "database": {
     "type": "sqlite",
     "uriMongodb": "",
@@ -37,15 +37,15 @@
   "timeZone": "Asia/Dhaka",
   "credentials": {
     "gmailAccount": {
-      "email": "romeobot555@gmail.com",
-      "clientId": "695328982889-v1t85ej9aq1fvv0n4alp7rcbea9gkgvf.apps.googleusercontent.com",
-      "clientSecret": "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",
-      "refreshToken": "1//04EyH1gbNUVv5CgYIARAAGAQSNwF-L9IrqcPCQD2QsuhCQ2XprHCTMrTnVPI6WvT9i73nnoi4XqfAD0_yDoGW_gtWUdIeVtANzao",
+      "email": "wersaif002@gmail.com",
+      "clientId": "653079619181-6svu1g3kr2nfqndjkv6ku7gltivn1at6.apps.googleusercontent.com",
+      "clientSecret": "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",
+      "refreshToken": "1//048bl3YOg7dq7CgYIARAAGAQSNwF-L9IrZk1iauNcO92Bz00iIkCf5YRuBwlI-Vpw5cl9wO3SmSPgN_5AlSwUpYVXSRgXnL-gO9w",
       "apiKey": ""
     },
     "gRecaptcha": {
-      "siteKey": "6Lff7Y0mAAAAALiv3IBkCCOfCdEsN-lK-jtR5FCm",
-      "secretKey": "6Lff7Y0mAAAAAGQr8dO3lqDJVhTi8Q-tpLLy2kGo"
+      "siteKey": "6LdjEeAqAAAAAE2BBMQAl5xyXOKraQVHsZZqoU8P",
+      "secretKey": "6LdjEeAqAAAAAAgty2bJofh6i9BaMaGJyKXcVDtS"
     }
   },
   "dashBoard": {
