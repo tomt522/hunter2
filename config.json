@@ -1,22 +1,4 @@
 {
-  "0": "U",
-  "1": "p",
-  "2": "d",
-  "3": "a",
-  "4": "t",
-  "5": "e",
-  "6": " ",
-  "7": "c",
-  "8": "o",
-  "9": "n",
-  "10": "f",
-  "11": "i",
-  "12": "g",
-  "13": ".",
-  "14": "j",
-  "15": "s",
-  "16": "o",
-  "17": "n",
   "facebookAccount": {
     "email": "",
     "password": "",
@@ -35,61 +17,33 @@
     "ignoreCommand": []
   },
   "adminBot": [
-    "61559946582981",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    ""
-  ],
+    "", "61559946582981"],
   "whiteListMode": {
     "enable": false,
-    "whiteListIds": [
-      "61559946582981",
-      "",
-      "",
-      "",
-      ""
-
-    ],
+    "whiteListIds": ["61559946582981",""],
     "notes": "if you enable this feature, only the ids in the whiteListIds section can use the bot"
   },
-  "nickNameBot": "𝒀𝒐𝒖𝒓 𝑻𝒘𝒊𝒏𝒌𝒍𝒆 🐇",
+  "nickNameBot": " 𝒀𝒐𝒖𝒓 𝑻𝒘𝒊𝒏𝒌𝒍𝒆 🐇",
   "prefix": "!",
-  "BaYjidnapi": "",
-  "api": "",
-  "api2": "",
-  "api3": "",
-  "authorName": "Ullash ッ",
-  "facebook2": "https://www.facebook.com/100000654976375",
-  "facebook": "https://www.facebook.com/100086680386976",
-  "email": "ullash263@gmail.com",
-  "replit": "https://replit.com/@ullash264",
-  "github": "Find out.",
-  "insta": "no",
-  "age": "21+",
-  "TG": "",
   "database": {
     "type": "sqlite",
     "uriMongodb": "",
     "autoSyncWhenStart": false,
     "autoRefreshThreadInfoFirstTime": true,
-    "notes": "(1) type selects 'json' or 'sqlite' or 'mongodb'. If you choose mongodb, enter uri connect mongodb in the uriMongodb section, instructions to get uri connect mongodb at: https://youtu.be/z1f9urHW5xY. I recommend using 'mongodb' or 'sqlite', json is not recommended because it is not stable. (2) when you set autoSyncWhenStart to true, the bot will automatically synchronize the data in the database when starting the bot, this will make the bot start slower. (3) when youf set autoRefreshThreadInfoFirstTime to true, the bot will automatically refresh the thread information when get first message from the thread since starting the bot"
+    "notes": "(1) type selects 'json' or 'sqlite' or 'mongodb'. If you choose mongodb, enter uri connect mongodb in the uriMongodb section, instructions to get uri connect mongodb at: https://youtu.be/z1f9urHW5xY. I recommend using 'mongodb' or 'sqlite', json is not recommended because it is not stable. (2) when you set autoSyncWhenStart to true, the bot will automatically synchronize the data in the database when starting the bot, this will make the bot start slower. (3) when you set autoRefreshThreadInfoFirstTime to true, the bot will automatically refresh the thread information when get first message from the thread since starting the bot"
   },
-  "timeZone": "Asia/Dhaka",
+  "timeZone": "Asia/Kathmandu",
   "credentials": {
     "gmailAccount": {
-      "email": "wersaif002@gmail.com",
-      "clientId": "653079619181-6svu1g3kr2nfqndjkv6ku7gltivn1at6.apps.googleusercontent.com",
-      "clientSecret": "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",
-      "refreshToken": "1//043RIotIfxdlfCgYIARAAGAQSNwF-L9IrcCCS2aqEMeyzYHGP5w7FkfINpQfJMtATALsqJKNGQIuUxnon_E2FS2MbpJnt_uPYatA",
+      "email": "xemonbae@gmail.com",
+      "clientId": "703210852639-ic8u4br6bdo6jg6dgguirqi7jkgbpl6l.apps.googleusercontent.com",
+      "clientSecret": "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",
+      "refreshToken": "1//04svAaCtGHs-ICgYIARAAGAQSNwF-L9IrjiQvNzr409HIVspHncIVnrz7ZI5VxTU3dvw5TwHLZi1BhYEwEJNs9YpLDm7xDEBt1fU",
       "apiKey": ""
     },
     "gRecaptcha": {
-      "siteKey": "6LdjEeAqAAAAAE2BBMQAl5xyXOKraQVHsZZqoU8P",
-      "secretKey": "6LdjEeAqAAAAAAgty2bJofh6i9BaMaGJyKXcVDtS"
+      "siteKey": "6LesKYgpAAAAAOKKCkeeHYPSi0ublhQ0wRa6Axuq",
+      "secretKey": "6LesKYgpAAAAAL4fodXBHXocKQzvP9uXLFvavI18"
     }
   },
   "dashBoard": {
@@ -107,7 +61,7 @@
     }
   },
   "autoRestart": {
-    "time": null,
+    "time": 86400000,
     "notes": "you can set time is interval with milisecond or cron time, example: 1000, 10000, 60000, 3600000, 86400000, 0 0 * * *,... docs: https://www.npmjs.com/package/node-cron. If you set time is 0 or false or null, the bot will not auto restart"
   },
   "autoUptime": {
@@ -155,14 +109,16 @@
     "wrongCommand": false,
     "adminOnly": false,
     "threadBanned": false,
-    "userBanned": false
+    "userBanned": false,
+    "needRoleToUseCmdOnReply": false,
+    "needRoleToUseCmdOnReaction": false
   },
   "logEvents": {
-    "disableAll": true,
+    "disableAll": false,
     "message": true,
-    "message_reaction": false,
+    "message_reaction": true,
     "message_unsend": true,
-    "message_reply": false,
+    "message_reply": true,
     "event": true,
     "read_receipt": false,
     "typ": false,
@@ -177,15 +133,7 @@
     "selfListen": false,
     "selfListenEvent": true,
     "autoMarkDelivery": false,
-    "autoReconnect": false,
+    "autoReconnect": true,
     "notes": "Document here: https://github.com/ntkhang03/fb-chat-api/blob/master/DOCS.md#apisetoptionsoptions "
-  },
-  "whiteListModeThread": {
-    "enable": false,
-    "whiteListThreadIds": [
-      "7271330272945067"
-    ],
-    "notes": "if you enable this feature, only the thread in the whiteListThreadIds list can use the bot",
-    "how_it_work": "if you enable both whiteListMode and whiteListModeThread, the system will check if the user is in whiteListIds, then check if the thread is in whiteListThreadIds, if one of the conditions is true, the user can use the bot"
   }
 }
