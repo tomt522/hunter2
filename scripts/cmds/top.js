@@ -35,8 +35,8 @@ module.exports = {
       }
     });
 
-    // Create a message with extra spacing to make the list appear bigger and more readable
-    const messageText = `👑 𝗧𝗼𝗽 15 𝗿𝗶𝗰𝗵𝗲𝘀𝘁 𝘂𝘀𝗲𝗿𝘀 👑:\n\n${topUsersList.join('\n\n')}\n\n`;
+    // Add the horizontal line (━━━━━━━━━━━━━━━━━) after the Top 15 title
+    const messageText = `👑 𝗧𝗢𝗣 15 𝗥𝗜𝗖𝗛𝗘𝗦𝗧 𝗨𝗦𝗘𝗥𝗦 👑:\n━━━━━━━━━━━━━━━━━\n\n${topUsersList.join('\n\n')}\n\n`;
 
     message.reply(messageText);
   }
