@@ -1,11 +1,7 @@
-const axios = require('axios');
-const fs = require('fs');
-const path = require('path');
-
 module.exports = {
 	config: {
 		name: "info",
-		aliases: ["admin"],
+		aliases: ["info"],
 		author: "ArYan 🤡",
 		role: 0,
 		shortDescription: "info and my owner the cmd",
@@ -16,7 +12,7 @@ module.exports = {
 
 	onStart: async function ({ api, event }) {
 		try {
-			const ArYanInfo = {
+			const S A I F info = {
 				name: '𝑺 𝑨 𝑰 𝑭_🌷✨',
 				gender: 'Male',
 				age: '15+',
