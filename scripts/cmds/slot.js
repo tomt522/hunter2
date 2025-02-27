@@ -49,7 +49,7 @@ module.exports = {
       return message.reply(getLang("not_enough_money"));
     }
 
-    const slots = ["💚", "💛", "💙", "🍀", "⭐", "🎲"];
+    const slots = ["💚", "💛", "💙", "🎀", "⭐", "🤍"];
     
     // Win/Lose Logic (20% win, 80% lose)
     let slot1, slot2, slot3;
