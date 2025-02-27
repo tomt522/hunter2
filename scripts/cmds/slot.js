@@ -3,13 +3,13 @@ const cooldowns = new Map();
 module.exports = {
   config: {
     name: "slot",
-    version: "1.6",
+    version: "1.8",
     author: "OtinXSandip", //modify SAIF 
     shortDescription: {
       en: "Unique styled slot game with cooldown & balanced win rate",
     },
     longDescription: {
-      en: "Slot game where you must wait 10 seconds before playing again, with a 40% win rate and unique design.",
+      en: "Slot game where you must wait 10 seconds before playing again, with a 20% win rate and tougher difficulty.",
     },
     category: "game",
   },
@@ -18,10 +18,10 @@ module.exports = {
       invalid_amount: "🚫 Enter a valid and positive amount to have a chance to win!",
       not_enough_money: "💰 Check your balance if you have that amount.",
       cooldown_message: "⏳ Wait %1 seconds before playing again!",
-      final_result: "🤩 SLOTS START 🎮\n┌───────────────┐\n│ %1 | %2 | %3 │\n└───────────────┘\n\n%4",
-      win_message: "🐔 JACKPOT! You won $%1! 🤑",
-      lose_message: "😿 You lost $%1.",
-      jackpot_message: "🐣 MEGA JACKPOT! You won $%1 with three %2 symbols! 💵💰",
+      final_result: "🐣 SLOTS START ✨\n┌───────────────┐\n│ %1 | %2 | %3 │\n└───────────────┘\n\n%4",
+      win_message: "🐔 Congratulations! You won $%1! 🤑",
+      lose_message: "😿 Oops, you lost $%1.",
+      jackpot_message: "💎 MEGA JACKPOT! You won $%1 with three %2 symbols! 💰💵",
     },
   },
   onStart: async function ({ args, message, event, usersData, getLang }) {
@@ -51,9 +51,9 @@ module.exports = {
 
     const slots = ["💚", "💛", "💙", "🍀", "⭐", "🎲"];
     
-    // Win/Lose Logic (40% win, 60% lose)
+    // Win/Lose Logic (20% win, 80% lose)
     let slot1, slot2, slot3;
-    const winChance = Math.random() < 0.4; // 40% chance to win
+    const winChance = Math.random() < 0.2; // 20% chance to win
 
     if (winChance) {
       slot1 = slot2 = slot3 = slots[Math.floor(Math.random() * slots.length)];
@@ -83,15 +83,15 @@ module.exports = {
 
 function calculateWinnings(slot1, slot2, slot3, betAmount) {
   if (slot1 === "💚" && slot2 === "💚" && slot3 === "💚") {
-    return betAmount * 10;
+    return betAmount * 5; // Reduced from 7
   } else if (slot1 === "💛" && slot2 === "💛" && slot3 === "💛") {
-    return betAmount * 5;
+    return betAmount * 3; // Reduced from 4
   } else if (slot1 === slot2 && slot2 === slot3) {
-    return betAmount * 3;
+    return betAmount * 1.5; // Reduced from 2
   } else if (slot1 === slot2 || slot1 === slot3 || slot2 === slot3) {
-    return betAmount * 2;
+    return betAmount * 1; // Small win
   } else {
-    return -betAmount;
+    return -betAmount * 1.5; // Increased loss
   }
 }
 
@@ -107,4 +107,4 @@ function getSpinResultMessage(slot1, slot2, slot3, winnings, getLang) {
     resultMessage = getLang("lose_message", -winnings);
   }
   return getLang("final_result", slot1, slot2, slot3, resultMessage);
-    }
+                                      }
