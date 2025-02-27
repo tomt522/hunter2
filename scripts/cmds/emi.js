@@ -5,7 +5,7 @@ const axios = require("axios");
 module.exports = {
   config: {
     name: "emi",
-    aliases: [emi],
+    aliases: ["emi"],
     author: "Vex_Kshitiz",
     version: "2.0",
     cooldowns: 20,
