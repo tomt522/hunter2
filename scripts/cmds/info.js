@@ -1,3 +1,7 @@
+const fs = require('fs');
+const path = require('path');
+const axios = require('axios');
+
 module.exports = {
 	config: {
 		name: "info",
@@ -12,14 +16,15 @@ module.exports = {
 
 	onStart: async function ({ api, event }) {
 		try {
-			const S A I F info = {
+			const ArYanInfo = {
 				name: '𝑺 𝑨 𝑰 𝑭_🌷✨',
 				gender: 'Male',
 				age: '15+',
-				Tiktok: 'komu nah!',
+				Class: '9',
 				Relationship: 'Single',
-				religion: 'islam',
-				facebook: 'https://www.facebook.com/share/1EgNmBT7Mn/;
+				religion: 'Islam',
+				facebook: 'https://m.me/ewrsaif570'
+			};
 
 			const ArYan = 'https://i.imgur.com/hA4K3it.jpeg';
 			const tmpFolderPath = path.join(__dirname, 'tmp');
@@ -34,13 +39,13 @@ module.exports = {
 			fs.writeFileSync(imgPath, Buffer.from(imgResponse.data, 'binary'));
 
 			const response = `╭─────❁\n│  𝗢𝗪𝗡𝗘𝗥 𝗜𝗡𝗙𝗢  \n│
-│𝐍𝐚𝐦𝐞: ${ArYanInfo.name}
-│𝐆𝐞𝐧𝐝𝐞𝐫 : ${ArYanInfo.gender}
-│𝐑𝐞𝐥𝐚𝐭𝐢𝐨𝐧𝐬𝐡𝐢𝐩 :${ArYanInfo.Relationship}
-│𝐀𝐠𝐞 :${ArYanInfo.age}
-│𝐑𝐞𝐥𝐢𝐠𝐢𝐨𝐧: ${ArYanInfo.religion}
-│𝐓𝐢𝐤𝐭𝐨𝐤 : ${ArYanInfo.Tiktok}
-│𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤: ${ArYanInfo.facebook}\n╰────────────❁`;
+│𝑵𝒂𝒎𝒆 : ${ArYanInfo.name}
+│𝑮𝒆𝒏𝒅𝒆𝒓 : ${ArYanInfo.gender}
+│𝑹𝒆𝒍𝒂𝒕𝒊𝒐𝒏𝒔𝒉𝒊𝒑 : ${ArYanInfo.Relationship}
+│𝑨𝒈𝒆 : ${ArYanInfo.age}
+│𝑹𝒆𝒍𝒊𝒈𝒊𝒐𝒏 : ${ArYanInfo.religion}
+│𝑪𝒍𝒂𝒔𝒔 : ${ArYanInfo.Class}
+│𝑭𝒂𝒄𝒆𝒃𝒐𝒐𝒌 : ${ArYanInfo.facebook}\n╰────────────❁`;
 
 			await api.sendMessage({
 				body: response,
