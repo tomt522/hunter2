@@ -36,7 +36,7 @@ module.exports = {
     });
 
     // Create a message with extra spacing to make the list appear bigger and more readable
-    const messageText = `👑 𝗧𝗼𝗽 15 𝗿𝗶𝗰𝗵𝗲𝘀𝘁 𝘂𝘀𝗲𝗿𝘀 👑:\n\n${topUsersList.join('\n\n')}\n\n🎉 Keep it up and keep climbing! 🎉`;
+    const messageText = `👑 𝗧𝗼𝗽 15 𝗿𝗶𝗰𝗵𝗲𝘀𝘁 𝘂𝘀𝗲𝗿𝘀 👑:\n\n${topUsersList.join('\n\n')}\n\n`;
 
     message.reply(messageText);
   }
