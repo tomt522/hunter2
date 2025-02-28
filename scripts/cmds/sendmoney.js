@@ -10,7 +10,7 @@ module.exports = {
         longDescription: {
             en: "Command to transfer money 💰 to another user by UID, mention, or by replying to their message.",
         },
-        category: "Finance 💼",
+        category: "economy",
     },
     onStart: async function ({ args, message, event, usersData }) {
         const { senderID, mentions, messageReply } = event;
