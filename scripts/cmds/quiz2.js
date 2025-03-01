@@ -1,117 +1,171 @@
-const axios = require("axios");
+const axios = require('axios');
+const fs = require('fs').promises;
+const path = require('path');
 
-const baseApiUrl = async () => {
-  const base = await axios.get(
-    `https://raw.githubusercontent.com/Blankid018/D1PT0/main/baseApiUrl.json`
-  );
-  return base.data.api;
-};
+const userDataFilePath = path.join(__dirname, 'user.json');
 
 module.exports = {
   config: {
     name: "quiz2",
     aliases: ["qz2"],
-    version: "1.0",
-    author: "Dipto",
-    countDown: 0,
+    version: "2.0",
+    author: "Kshitiz",
     role: 0,
+    shortDescription: "Play quiz",
+    longDescription: "Play a quiz based on different categories",
     category: "game",
-    guide: "{p}quiz2 \n{pn}quiz2 bn \n{p}quiz2 en",
+    guide: {
+      en: "{p}quiz2 list | top | category"
+    }
   },
 
-  onStart: async function ({ api, event, usersData, args }) {
-    const input = args.join('').toLowerCase() || "bn";
-    let timeout = 300;
-    let category = "bangla";
-    if (input === "bn" || input === "bangla") {
-      category = "bangla";
-    } else if (input === "en" || input === "english") {
-      category = "english";
- }
+  onStart: async function ({ event, message, usersData, api, args }) {
+    if (args.length === 1 && args[0] === "list") {
+      const categories = [
+        "gk",
+        "music",
+        "videogame",
+        "naturescience",
+        "computerscience",
+        "math",
+        "mythology",
+        "sports",
+        "geography",
+        "history",
+        "politics",
+        "art",
+        "celebrety",
+        "anime",
+        "cartoon"
+      ];
+      return message.reply(`Available categories: ${categories.join(", ")}`);
+    } else if (args.length === 1 && args[0] === "top") {
+      const topUsers = await getTopUsers(usersData, api);
+      if (topUsers.length === 0) {
+        return message.reply("No users found.");
+      } else {
+        const topUsersString = topUsers.map((user, index) => `${index + 1}. ${user.username}: ${user.money} coins`).join("\n");
+        return message.reply(`Top 5 pro players:\n${topUsersString}`);
+      }
+    } else if (args.length === 1) {
+      const category = args[0].toLowerCase();
+      const quizData = await fetchQuiz(category);
+      if (!quizData) {
+        return message.reply("Failed to fetch quiz question. Please try again later.");
+      }
+
+      const { question, options } = quizData;
+      const optionsString = options.map((opt, index) => `${String.fromCharCode(65 + index)}.${opt.answer}`).join("\n");
+
+      const sentQuestion = await message.reply(`Question: ${question}\nOptions:\n${optionsString}`);
+
+      global.GoatBot.onReply.set(sentQuestion.messageID, {
+        commandName: this.config.name,
+        messageID: sentQuestion.messageID,
+        correctAnswerLetter: quizData.correct_answer_letter
+      });
+
+      setTimeout(async () => {
+        try {
+          await message.unsend(sentQuestion.messageID);
+        } catch (error) {
+          console.error("Error while unsending question:", error);
+        }
+      }, 20000); 
+    } else {
+      return message.reply("Invalid usage. Type `quiz list` to see available categories, `quiz top` to see top players, or `quiz {category}` to start a quiz.");
+    }
+  },
+
+  onReply: async function ({ message, event, Reply, usersData }) {
+    const userAnswer = event.body.trim();
+    const correctAnswerLetter = Reply.correctAnswerLetter.toUpperCase();
+
+    if (userAnswer === correctAnswerLetter) {
+      const userID = event.senderID;
+      await addCoins(userID, 1000, usersData);
+      await message.reply("🎉🎊 Congratulations! Your answer is correct. You have received 1000 coins.");
+    } else {
+      await message.reply(`🥺 Oops! Wrong answer. The correct answer was: ${correctAnswerLetter}`);
+    }
 
     try {
-      const response = await axios.get(
-        `${await baseApiUrl()}/quiz2?category=${category}&q=random`,
-      );
-
-      const quizData = response.data.question;
-      const { question, correctAnswer, options } = quizData;
-      const { a, b, c, d } = options;
-      const namePlayerReact = await usersData.getName(event.senderID);
-      const quizMsg = {
-        body: `\n╭──✦ ${question}\n├‣ 𝗔) ${a}\n├‣ 𝗕) ${b}\n├‣ 𝗖) ${c}\n├‣ 𝗗) ${d}\n╰──────────────────‣\n𝚁𝚎𝚙𝚕𝚢 𝚝𝚘 𝚝𝚑𝚒𝚜 𝚖𝚎𝚜𝚜𝚊𝚐𝚎 𝚠𝚒𝚝𝚑 𝚢𝚘𝚞𝚛 𝚊𝚗𝚜𝚠𝚎𝚛.`,
-      };
-
-      api.sendMessage(
-        quizMsg,
-        event.threadID,
-        (error, info) => {
-          global.GoatBot.onReply.set(info.messageID, {
-            type: "reply",
-            commandName: this.config.name,
-            author: event.senderID,
-            messageID: info.messageID,
-            dataGame: quizData,
-            correctAnswer,
-            nameUser: namePlayerReact,
-            attempts: 0
-          });
-          setTimeout(() => {
-            api.unsendMessage(info.messageID);
-          }, timeout * 1000);
-        },
-        event.messageID,
-      );
+      await message.unsend(event.messageID);
     } catch (error) {
-      console.error("❌ | Error occurred:", error);
-      api.sendMessage(error.message, event.threadID, event.messageID);
+      console.error("Error while unsending message:", error);
     }
-  },
 
-  onReply: async ({ event, api, Reply, usersData }) => {
-const { correctAnswer, nameUser, author } = Reply;
-    if (event.senderID !== author)
-      return api.sendMessage(
-        "Who are you bby🐸🦎",
-        event.threadID,
-        event.messageID
-      );
-    const maxAttempts = 2;
-
-    switch (Reply.type) {
-      case "reply": {
-        let userReply = event.body.toLowerCase();
-        if (Reply.attempts >= maxAttempts) {
-          await api.unsendMessage(Reply.messageID);
-          const incorrectMsg = `🚫 | ${nameUser}, you have reached the maximum number of attempts (2).\nThe correct answer is: ${correctAnswer}`;
-          return api.sendMessage(incorrectMsg, event.threadID, event.messageID);
-        }
-        if (userReply === correctAnswer.toLowerCase()) {
-          api.unsendMessage(Reply.messageID)
-          .catch(console.error);
-          let rewardCoins = 300;
-          let rewardExp = 100;
-          let userData = await usersData.get(author);
-          await usersData.set(author, {
-          money: userData.money + rewardCoins,
-            exp: userData.exp + rewardExp,
-            data: userData.data,
-          });
-          let correctMsg = `Congratulations, ${nameUser}! 🌟🎉\n\nYou're a Quiz Champion! 🏆\n\nYou've earned ${rewardCoins} Coins 💰 and ${rewardExp} EXP 🌟\n\nKeep up the great work! 🚀`;
-          api.sendMessage(correctMsg, event.threadID, event.messageID);
-        } else {
-          Reply.attempts += 1;
-global.GoatBot.onReply.set(Reply.messageID, Reply);
-          api.sendMessage(
-            `❌ | Wrong Answer. You have ${maxAttempts - Reply.attempts} attempts left.\n✅ | Try Again!`,
-            event.threadID,
-            event.messageID,
-          );
-        }
-        break;
+    const { commandName, messageID } = Reply;
+    if (commandName === this.config.name) {
+      try {
+        await message.unsend(messageID);
+      } catch (error) {
+        console.error("Error while unsending question:", error);
       }
-      default:
-        break;
     }
-  },
+  }
 };
+
+async function fetchQuiz(category) {
+  try {
+    const response = await axios.get(`https://new-quiz-black.vercel.app/quiz?category=${category}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching quiz question:", error);
+    return null;
+  }
+}
+
+async function addCoins(userID, amount, usersData) {
+  try {
+    let userData = await usersData.get(userID);
+    if (!userData) {
+      userData = { money: 0 };
+    }
+    userData.money += amount;
+    await usersData.set(userID, userData);
+  } catch (error) {
+    console.error("Error adding coins:", error);
+  }
+}
+
+async function getTopUsers(usersData, api) {
+  const allUserData = await getAllUserData(usersData);
+  const userIDs = Object.keys(allUserData);
+  const topUsers = [];
+
+  for (const userID of userIDs) {
+    api.getUserInfo(userID, async (err, userInfo) => {
+      if (err) {
+        console.error("Failed to retrieve user information:", err);
+        return;
+      }
+
+      const username = userInfo[userID].name;
+      if (username) {
+        const userData = allUserData[userID];
+        topUsers.push({ username, money: userData.money });
+      }
+    });
+  }
+
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(topUsers.sort((a, b) => b.money - a.money).slice(0, 5));
+    }, 2000);
+  });
+}
+
+async function getAllUserData(usersData) {
+  try {
+    const allUserData = {};
+    const allUsers = await usersData.all();
+    allUsers.forEach(user => {
+      allUserData[user.userID] = user.value;
+    });
+    return allUserData;
+  } catch (error) {
+    console.error("Error reading user data:", error);
+    return {};
+  }
+        }
