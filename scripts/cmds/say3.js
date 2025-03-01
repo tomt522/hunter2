@@ -44,7 +44,7 @@ module.exports = {
 
                         } catch (e) {
         console.log(e)
-        message.reply(`MADARCHOD MAHI VAI CHARA AMK DIYA GALI DEWAILE TUI GAY `) }
+        message.reply(` <'3 𝑷𝒍𝒆𝒂𝒔𝒆 𝒆𝒏𝒕𝒆𝒓 𝒂 𝒎𝒆𝒔𝒔𝒂𝒈𝒆 `) }
 
         }
 };
