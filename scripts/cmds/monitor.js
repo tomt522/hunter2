@@ -18,7 +18,7 @@ module.exports = {
     try {
       const t = Date.now(); 
 
-      const s = ["zoro", "madara", "obito", "luffy"];
+      const s = ["zoro", "madara", "obito", "luffy", "naruto", "itachi", "sung jinwoo"];
 
       const r = Math.floor(Math.random() * s.length);
       const q = s[r];
