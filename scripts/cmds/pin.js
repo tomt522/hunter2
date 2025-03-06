@@ -1,95 +1,56 @@
 const axios = require('axios');
-const fs = require('fs-extra');
+module.exports.config = {
+  name: "pinterest",
+  category: "tool",
+  author: "Nyx",
+};
 
-module.exports = {
-  config: {
-    name: 'pinterest',
-    aliases: ["pin"],
-    version: '1.2',
-    author: 'Samuel',
-    countDown: 5,
-    role: 0,
-    category: 'Image Search',
-    shortDescription: {
-      en: "Search for images on Pinterest based on a keyword",
-    },
-    longDescription: {
-      en: "This command searches for images on Pinterest based on a provided keyword.",
-    },
-    guide: {
-      en: "{pn} 'keyword' -'number of search results'\nExample: {pn} cute -10\nIf no number is provided, the command will return the first 5 images.",
-    },
-  },
+module.exports.onStart = async function ({ api, event, args }) {
+  const query = args[0];
+  const limit = parseInt(args[1]) || 30;
 
-  onStart: async function ({ api, args, event , message }) {
-    const { getPrefix } = global.utils;
-       const p = getPrefix(event.threadID);
-    const approvedmain = JSON.parse(fs.readFileSync(`${__dirname}/assist_json/approved_main.json`));
-    const bypassmain = JSON.parse(fs.readFileSync(`${__dirname}/assist_json/bypass_id.json`));
-    const bypassmUid = event.senderID;
-    if (bypassmain.includes(bypassmUid)) {
-      console.log(`User ${bypassmUid} is in bypass list. Skipping the main approval check.`);
-    } else {
-      const threadmID = event.threadID;
-      if (!approvedmain.includes(threadmID)) {
-        const msgSend = message.reply(`cmd 'Pinterest' is locked 🔒...\n Reason : Bot's main cmd \nyou need permission to use all main cmds.\n\nType ${p}requestMain to send a request to admin`);
-        setTimeout(async () => {
-          message.unsend((await msgSend).messageID);
-        }, 40000);
-        return;
-      }
-    }  
+  if (!query) {
+    return api.sendMessage("⚠️ Please provide a search query! Example: pinterest cat 30", event.threadID);
+  }
 
+  if (limit > 40) {
+    return api.sendMessage("⚠️ Limit exceeded! Maximum limit is 40.", event.threadID);
+  }
 
+  try {
+    const response = await axios.get(`https://www.noobz-api.rf.gd/api/pinterest?search=${query}`);
+    const { data } = response.data;
 
-
-
-    let keyword = args.join(' ');
-    let numberSearch = 4;
-    const match = keyword.match(/(.+?)\s*-?(\d+)?$/);
-    if (match) {
-      keyword = match[1].trim();
-      if (match[2]) {
-        numberSearch = parseInt(match[2]);
-      }
+    if (!data || data.length === 0) {
+      return api.sendMessage("❌ No results found for your query.", event.threadID);
     }
 
-    if (!keyword) {
-      api.sendMessage("Please provide a keyword.\nExample: Pinterest cute anime boy -10", event.threadID, event.messageID);
-      return;
+    const selectedImages = data.slice(0, limit);
+    const attachments = await Promise.all(
+      selectedImages.map(async (imageUrl) => {
+        try {
+          return await global.utils.getStreamFromUrl(imageUrl);
+        } catch (err) {
+          console.error(`Ops baka failed to stream image: ${imageUrl}`, err);
+          return null;
+        }
+      })
+    );
+    const validAttachments = attachments.filter((stream) => stream !== null);
+
+    if (validAttachments.length === 0) {
+      return api.sendMessage("❌ No valid images to send.", event.threadID);
     }
-
-    if (numberSearch > 20) {
-      api.sendMessage("Maximum number of search results is 20.", event.threadID, event.messageID);
-      return;
-    }
-
-    try {
-      const res = await axios.get(`https://api-dien.kira1011.repl.co/pinterest?search=${encodeURIComponent(keyword)}`);
-      const data = res.data.data;
-      let num = 0;
-      const img = [];
-
-      for (let i = 0; i < numberSearch; i++) {
-        const path = __dirname + `/tmp/${num += 1}.jpg`;
-        const getDown = (await axios.get(`${data[i]}`, { responseType: 'arraybuffer' })).data;
-        fs.writeFileSync(path, Buffer.from(getDown, 'utf-8'));
-        img.push(fs.createReadStream(path));
+   
+    return api.sendMessage(
+      { attachment: validAttachments },
+      event.threadID,
+      () => {
+        api.sendMessage(`✅ Successfully sent ${validAttachments.length} images for query "${query}".`, event.threadID);
       }
-
-      api.sendMessage({
-        body: `${numberSearch} search results for keyword: ${keyword}`,
-        attachment: img
-      }, event.threadID, event.messageID);
-
-      for (let ii = 1; ii < numberSearch; ii++) {
-        fs.unlinkSync(__dirname + `/tmp/${ii}.jpg`);
-      }
-    } catch (err) {
-      console.error(err);
-      api.sendMessage("Your search Input in Disallowed in Pinterest.", event.threadID, event.messageID);
-      return;
-    }
+    );
+  } catch (error) {
+    console.error(error);
+    return api.sendMessage("❌ Failed to fetch data. Please try again later.", event.threadID);
   }
 };
-                   
