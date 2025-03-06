@@ -1,7 +1,7 @@
 const axios = require('axios');
 module.exports.config = {
   name: "pinterest",
-  category: "tool",
+  category: "image",
   author: "Nyx",
 };
 
