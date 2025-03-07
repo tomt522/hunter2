@@ -1,9 +1,9 @@
 module.exports = {
     config: {
-        name: "bday",
+        name: "saif-birthday",
         version: "1.0",
         author: "Samir",
-        aliases: ["birthday"],
+        aliases: ["saif-birthday"],
         countDown: 5,
         role: 0,
         category: "birthday🎀",
