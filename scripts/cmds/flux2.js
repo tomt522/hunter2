@@ -1,7 +1,8 @@
 const axios = require('axios');
 const config = {
-  name: 'flux',
+  name: 'flux2',
   category: 'tool',
+  aliases: "flux2",
   author: 'Romim|nyx',
   role: 2,
 };
