@@ -1,107 +1,55 @@
-const os = require('os');
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
-
 module.exports = {
-    config: {
-        name: "uptime3",
-        aliases: ["uptime3", "upt3"],
-        version: "1.2",
-        author: "Anthony",
-        countDown: 5,
-        role: 0,
-        shortDescription: {
-            en: ""
-        },
-        longDescription: {
-            en: "get information."
-        },
-        category: "system",
-        guide: {
-            en: "{pn}"
-        }
+  config: {
+    name: "uptime3",
+    aliases:["up3", "upt3"],
+    version: "1.7",
+    author: "Anas x 114",
+    role: 0,
+    shortDescription: {
+      en: "Get stylish bot stats and uptime!"
     },
-
-    onStart: async function ({ message, event, args, api, usersData, threadsData }) {
-        const iURL = "https://i.imgur.com/2KeayTN.jpeg"; //**photo link to fixed don't change photo link okay bro**//
-        const uptime = process.uptime();
-        const s = Math.floor(uptime % 60);
-        const m = Math.floor((uptime / 60) % 60);
-        const h = Math.floor((uptime / (60 * 60)) % 24);
-        const upSt = `${h} Hour ${m} minute ${s} second`;
-
-        let threadInfo = await api.getThreadInfo(event.threadID);
-
-        const genderb = [];
-        const genderg = [];
-        const nope = [];
-
-        for (let z in threadInfo.userInfo) {
-            const gioitinhone = threadInfo.userInfo[z].gender;
-            const nName = threadInfo.userInfo[z].name;
-
-            if (gioitinhone === "MALE") {
-                genderb.push(z + gioitinhone);
-            } else if (gioitinhone === "FEMALE") {
-                genderg.push(gioitinhone);
-            } else {
-                nope.push(nName);
-            }
-        }
-
-        const b = genderb.length;
-        const g = genderg.length;
-        const u = await usersData.getAll();
-        const t = await threadsData.getAll();
-        const totalMemory = os.totalmem();
-        const freeMemory = os.freemem();
-        const usedMemory = totalMemory - freeMemory;
-        const diskUsage = await getDiskUsage();
-        const system = `${os.platform()} ${os.release()}`;
-        const model = `${os.cpus()[0].model}`;
-        const cores = `${os.cpus().length}`;
-        const arch = `${os.arch()}`;
-        const processMemory = prettyBytes(process.memoryUsage().rss);
-
-        const a = {
-            body: `╭─✦ 𝗕𝗢𝗧 𝗨𝗣𝗧𝗜𝗠𝗘 ✦─
- |
-├‣ ⚡ Prefix: ( ${global.GoatBot.config.prefix} )
- |
-├‣ 🎀 Bot Running: ${upSt}
- |
-├‣ 💁🏻‍♂️ Boys: ${b}
- |
-├‣ 💁🏻‍♀️ Girls: ${g}
- |
-├‣ 🫰🏻 Groups: ${t.length}
- |
-├‣ 🎉 Users: ${u.length}
- |
-├‣ 🎗️ OS: ${system}
- |
-├‣ 📲 Model: ${model}
- |
-╰───────────⧕`,
-            attachment: await global.utils.getStreamFromURL(iURL)
-        };
-
-        message.reply(a, event.threadID);
+    longDescription: {
+      en: "Displays bot uptime, user, thread stats, and total messages processed in a modern and visually engaging style."
+    },
+    category: "system",
+    guide: {
+      en: "Use {p}uptime to display the bot's stats in style."
     }
-};
+  },
+  onStart: async function ({ api, event, usersData, threadsData, messageCount }) {
+    try {
+      const allUsers = await usersData.getAll();
+      const allThreads = await threadsData.getAll();
+      const uptime = process.uptime();
 
-async function getDiskUsage() {
-    const { stdout } = await exec('df -k /');
-    const [_, total, used] = stdout.split('\n')[1].split(/\s+/).filter(Boolean);
-    return { total: parseInt(total) * 1024, used: parseInt(used) * 1024 };
-}
+      // Calculate formatted uptime
+      const days = Math.floor(uptime / 86400);
+      const hours = Math.floor((uptime % 86400) / 3600);
+      const minutes = Math.floor((uptime % 3600) / 60);
+      const seconds = Math.floor(uptime % 60);
 
-function prettyBytes(bytes) {
-    const units = ['B', 'KB', 'MB', 'GB', 'TB'];
-    let i = 0;
-    while (bytes >= 1024 && i < units.length - 1) {
-        bytes /= 1024;
-        i++;
+      const uptimeString = `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+
+      // Active threads (threads with activity)
+      const activeThreads = allThreads.filter(thread => thread.messageCount > 0).length;
+
+      // Total messages processed
+      const totalMessages = messageCount || 0; // Replace with actual message count logic if needed
+
+      // Stylish message design
+      const message = `
+      𝗧𝘄𝗶𝗻𝗸𝗹𝗲 𝘂𝗽𝘁𝗶𝗺𝗲💅
+🐤 Uptime: ${uptimeString}
+🌬️ Total Users: ${allUsers.length}
+🔐 Total Threads: ${allThreads.length}
+🔥 Active Threads: ${activeThreads}
+💬 Total Messages: ${totalMessages}
+      `;
+
+      api.sendMessage(message.trim(), event.threadID);
+    } catch (error) {
+      console.error(error);
+      api.sendMessage("An error occurred while retrieving bot stats.", event.threadID);
     }
-    return `${bytes.toFixed(2)} ${units[i]}`;
   }
+};
