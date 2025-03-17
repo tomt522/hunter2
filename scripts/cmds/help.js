@@ -37,7 +37,7 @@ module.exports = {
         const categories = {};
         let msg = "";
 
-        msg += `╔════════════╗\n 𝒚𝒐𝒖𝒓 𝒕𝒘𝒊𝒏𝒌𝒍𝒆♕︎ \n╚════════════╝\n`;
+        msg += `╔════════════╗\n Yₒᵤᵣ𝐓𝐎𝐌♕︎ \n╚════════════╝\n`;
 
         for (const [name, value] of commands) {
           if (value.config.role > 1 && role < value.config.role) continue;
@@ -58,8 +58,8 @@ module.exports = {
         });
 
         const totalCommands = commands.size;
-        msg += `\n🌈𝗬𝗼𝘂𝗿𝗲 𝘁𝘄𝗶𝗻𝗸𝗹𝗲 𝘁𝗼𝘁𝗮𝗹 𝗰𝗼𝗺𝗺𝗮𝗻𝗱𝘀 : ${totalCommands} \n`;
-        msg += `𝗔𝗱𝗺𝗶𝗻_𝖲 𝖠 𝖨 𝖥 ☘︎`;
+        msg += `\nYₒᵤᵣ𝐓𝐎𝐌 𝘁𝗼𝘁𝗮𝗹 𝗰𝗼𝗺𝗺𝗮𝗻𝗱𝘀 : ${totalCommands} \n`;
+        msg += `𝗔𝗱𝗺𝗶𝗻_𝐑𝐈𝐅𝐀𝐓`;
 
         // Fixed: Set a valid image URL
         const helpListImages = [
