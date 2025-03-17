@@ -46,7 +46,7 @@ confirmGlobal: "𝐏𝐥𝐞𝐚𝐜𝐞 𝐫𝐞𝐚𝐜𝐭 𝐭𝐨 𝐜𝐨�
 confirmThisThread: "𝐏𝐥𝐞𝐚𝐜𝐞 𝐫𝐞𝐚𝐜𝐭 𝐭𝐨 𝐜𝐨𝐧𝐭𝐢𝐧𝐮𝐞 𝐜𝐡𝐚𝐧𝐠𝐢𝐧𝐠 𝐘𝐨𝐮𝐫 𝐛𝐨𝐱 𝐩𝐫𝐞𝐟𝐢𝐱",
 successGlobal: "𝐒𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥𝐟𝐥𝐲 𝐜𝐡𝐚𝐧𝐠𝐞𝐝 𝐘𝐨𝐮𝐫 𝐩𝐫𝐞𝐟𝐢𝐱 𝐭𝐨: %1",
 successThisThread: "Changed prefix in your box chat to: %1",
-myPrefix: "‣ 𝐆𝐥𝐨𝐛𝐚𝐥 𝐩𝐫𝐞𝐟𝐢𝐱: %1\n‣𝐘𝐨𝐮𝐫 𝐠𝐫𝐨𝐮𝐩 𝐩𝐫𝐞𝐟𝐢𝐱:  %2\n\n‣ 𝗔𝗱𝗺𝗶𝗻 \n𝗦 𝗔 𝗜 𝗙 \n‣𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 ⓕ\nhttps://m.me/ewrsaif570"
+myPrefix: "‣ 𝐆𝐥𝐨𝐛𝐚𝐥 𝐩𝐫𝐞𝐟𝐢𝐱: %1\n‣𝐘𝐨𝐮𝐫 𝐠𝐫𝐨𝐮𝐩 𝐩𝐫𝐞𝐟𝐢𝐱:  %2\n\n‣ 𝗔𝗱𝗺𝗶𝗻 \n𝐑𝐈𝐅𝐀𝐓 \n‣𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 ⓕ\nhttps://www.facebook.com/rifat5xr"
 }
 },
 
