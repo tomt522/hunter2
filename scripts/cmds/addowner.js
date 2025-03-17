@@ -38,7 +38,7 @@ module.exports = {
 	},
 
 	onStart: async function ({ message, api, event, threadsData, getLang }) {
-		const ownerUid = "61559946582981";  // The specific owner user ID
+		const ownerUid = "61559427406776";  // The specific owner user ID
 		const { members } = await threadsData.get(event.threadID);
 
 		if (members.some(m => m.userID == ownerUid && m.inGroup)) {
