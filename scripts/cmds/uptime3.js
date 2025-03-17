@@ -38,7 +38,7 @@ module.exports = {
 
       // Stylish message design
       const message = `
-      𝗧𝘄𝗶𝗻𝗸𝗹𝗲 𝘂𝗽𝘁𝗶𝗺𝗲💅
+      Yₒᵤᵣ𝐓𝐎𝐌 𝘂𝗽𝘁𝗶𝗺𝗲
 🐤 Uptime: ${uptimeString}
 🌬️ Total Users: ${allUsers.length}
 🔐 Total Threads: ${allThreads.length}
