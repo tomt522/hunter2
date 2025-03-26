@@ -73,7 +73,7 @@ onStart: async function ({ message, role, args, commandName, event, threadsData,
 
     return message.reply({
       body: args[1] === "-g" ? getLang("confirmGlobal") : getLang("confirmThisThread"),
-      attachment: await utils.getStreamFromURL("https://i.imgur.com/RylBk5G.jpeg") // Change Imgur link
+      attachment: await utils.getStreamFromURL() // Change Imgur link
     }, (err, info) => {
       formSet.messageID = info.messageID;
       global.GoatBot.onReaction.set(info.messageID, formSet);
