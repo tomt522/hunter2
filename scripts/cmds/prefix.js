@@ -57,7 +57,7 @@ onStart: async function ({ message, role, args, commandName, event, threadsData,
       await threadsData.set(event.threadID, null, "data.prefix");
       return message.reply({
         body: getLang("reset", global.GoatBot.config.prefix),
-        attachment: await utils.getStreamFromURL("https://i.imgur.com/GxR9yDj.jpeg") // Change Imgur link
+        attachment: await utils.getStreamFromURL("") // Change Imgur link
       });
     }
 
@@ -89,13 +89,13 @@ onStart: async function ({ message, role, args, commandName, event, threadsData,
       fs.writeFileSync(global.client.dirConfig, JSON.stringify(global.GoatBot.config, null, 2));
       return message.reply({
         body: getLang("successGlobal", newPrefix),
-        attachment: await utils.getStreamFromURL("https://i.imgur.com/UChLWIl.jpeg") // Change Imgur link
+        attachment: await utils.getStreamFromURL("") // Change Imgur link
       });
     } else {
       await threadsData.set(event.threadID, newPrefix, "data.prefix");
       return message.reply({
         body: getLang("successThisThread", newPrefix),
-        attachment: await utils.getStreamFromURL("https://i.imgur.com/UChLWIl.jpeg") // Change Imgur link
+        attachment: await utils.getStreamFromURL("") // Change Imgur link
       });
     }
   },
@@ -107,7 +107,7 @@ onStart: async function ({ message, role, args, commandName, event, threadsData,
     if (event.body && event.body.toLowerCase() === "prefix") {
       return message.reply({
         body: getLang("myPrefix", globalPrefix, threadPrefix),
-        attachment: await utils.getStreamFromURL("https://i.imgur.com/WiJMB3V.mp4") // Change Imgur link
+        attachment: await utils.getStreamFromURL("") // Change Imgur link
       });
     }
   }
